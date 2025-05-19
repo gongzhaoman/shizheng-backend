@@ -8,6 +8,9 @@ COPY package*.json ./
 # 安装依赖
 RUN npm install
 
+# 安装 tsx
+RUN npm install -g tsx
+
 # 复制配置文件
 COPY tsconfig.json ./
 COPY .env* ./
@@ -24,7 +27,7 @@ COPY src ./src/
 RUN npm run build
 
 # 创建启动脚本 - 使用单引号确保换行符正确
-RUN printf '#!/bin/sh\necho "Running migrations..."\nnpx prisma migrate deploy\necho "Starting app..."\nnpm run start\n' > /app/start.sh && chmod +x /app/start.sh
+RUN printf '#!/bin/sh\necho "Running migrations..."\nnpx prisma migrate deploy\necho "Starting app..."\nnpx tsx src/index.ts\n' > /app/start.sh && chmod +x /app/start.sh
 
 # 暴露端口
 EXPOSE 3000
