@@ -12,6 +12,7 @@ RUN npm install
 COPY tsconfig.json ./
 COPY .env* ./
 COPY prisma ./prisma/
+COPY scripts ./scripts/
 
 # 生成Prisma客户端
 RUN npx prisma generate
@@ -19,14 +20,14 @@ RUN npx prisma generate
 # 复制源代码
 COPY src ./src/
 
-# 构建项目 - 确保这步成功执行
-RUN npm run build && ls -la dist/
+# 构建项目
+RUN npm run build
 
-# 执行Prisma迁移
-RUN npx prisma migrate deploy
+# 创建启动脚本 - 使用单引号确保换行符正确
+RUN printf '#!/bin/sh\necho "Running migrations..."\nnpx prisma migrate deploy\necho "Starting app..."\nnpm run start\n' > /app/start.sh && chmod +x /app/start.sh
 
 # 暴露端口
 EXPOSE 3000
 
-# 启动应用
-CMD ["npm", "run", "start"]
+# 使用启动脚本
+CMD ["/bin/sh", "/app/start.sh"]
