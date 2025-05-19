@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { logger } from 'hono/logger';
 import { cors } from 'hono/cors';
 import { serve } from '@hono/node-server';
+import projectsRoutes from './routes/projects';
 
 const app = new Hono();
 const api = app.basePath('/api');
@@ -17,6 +18,9 @@ api.get('/hello', (c) => {
     status: 'ok',
   });
 });
+
+// 项目API路由
+api.route('/projects', projectsRoutes);
 
 // Start the server
 const port = Number(process.env.PORT) || 3001;

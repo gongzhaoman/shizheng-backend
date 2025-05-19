@@ -9,11 +9,15 @@
     "start": "node dist/index.js",
     "lint": "eslint --ext .ts src/",
     "lint:fix": "eslint --ext .ts src/ --fix",
-    "format": "prettier --write \"src/**/*.ts\""
+    "format": "prettier --write \"src/**/*.ts\"",
+    "seed": "tsx scripts/seed.ts"
   },
   "dependencies": {
     "@hono/node-server": "^1.14.1",
-    "hono": "^4.7.10"
+    "@prisma/client": "^6.8.2",
+    "hono": "^4.7.10",
+    "ioredis": "^5.6.1",
+    "prisma": "^6.8.2"
   },
   "devDependencies": {
     "@types/node": "^18.18.0",
