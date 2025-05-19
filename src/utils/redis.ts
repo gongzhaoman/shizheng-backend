@@ -1,8 +1,8 @@
 import Redis from 'ioredis';
 
 const redis = new Redis({
-  host: 'localhost',
-  port: 6380, // 与docker-compose.yml中配置的端口一致
+  host: process.env.REDIS_HOST || 'localhost',
+  port: Number(process.env.REDIS_PORT) || 6380,
 });
 
 export default redis;
