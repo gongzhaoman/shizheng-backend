@@ -8,6 +8,8 @@ services:
     container_name: shizheng-app
     environment:
       - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=postgresql://postgres:123321@postgres:5432/shizheng
     depends_on:
       - postgres
       - redis
@@ -25,7 +27,7 @@ services:
       POSTGRES_PASSWORD: 123321
       POSTGRES_DB: shizheng
     volumes:
-      - ./pgdata:/var/lib/postgresql/data:rw
+      - pgdata:/var/lib/postgresql/data
     networks:
       - shizheng_network
 
@@ -35,7 +37,7 @@ services:
     ports:
       - '6380:6379'
     volumes:
-      - ./redis_data:/data
+      - redis_data:/data
     networks:
       - shizheng_network
 
@@ -44,3 +46,7 @@ networks:
     driver: bridge
   nginx-proxy-manager-network:
     external: true
+
+volumes:
+  pgdata:
+  redis_data:
