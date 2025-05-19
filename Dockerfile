@@ -2,17 +2,25 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# 复制 package.json 和 package-lock.json
+# 复制package.json和lock文件
 COPY package*.json ./
 
 # 安装依赖
 RUN npm install
 
-# 复制源代码
-COPY . .
+# 复制配置文件
+COPY tsconfig.json ./
+COPY .env* ./
+COPY prisma ./prisma/
 
-# 构建项目
-RUN npm run build
+# 生成Prisma客户端
+RUN npx prisma generate
+
+# 复制源代码
+COPY src ./src/
+
+# 构建项目 - 确保这步成功执行
+RUN npm run build && ls -la dist/
 
 # 暴露端口
 EXPOSE 3000
