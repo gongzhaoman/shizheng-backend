@@ -22,6 +22,9 @@ COPY src ./src/
 # 构建项目 - 确保这步成功执行
 RUN npm run build && ls -la dist/
 
+# 执行Prisma迁移
+RUN npx prisma migrate deploy
+
 # 暴露端口
 EXPOSE 3000
 
