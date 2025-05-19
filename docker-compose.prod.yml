@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    image: shizheng-app
+    container_name: shizheng-app
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - shizheng_network
+      - nginx-proxy-manager-network
+
+  postgres:
+    image: ankane/pgvector
+    container_name: shizheng-postgres
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123321
+      POSTGRES_DB: shizheng
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data:rw
+    networks:
+      - shizheng_network
+
+  redis:
+    image: redis:latest
+    container_name: shizheng-redis
+    ports:
+      - '6380:6379'
+    volumes:
+      - ./redis_data:/data
+    networks:
+      - shizheng_network
+
+networks:
+  shizheng_network:
+    driver: bridge
+  nginx-proxy-manager-network:
+    external: true
