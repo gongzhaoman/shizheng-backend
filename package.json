@@ -15,11 +15,14 @@
   "dependencies": {
     "@hono/node-server": "^1.14.1",
     "@prisma/client": "^6.8.2",
+    "exceljs": "^4.4.0",
     "hono": "^4.7.10",
     "ioredis": "^5.6.1",
+    "multer": "^1.4.5-lts.2",
     "prisma": "^6.8.2"
   },
   "devDependencies": {
+    "@types/multer": "^1.4.12",
     "@types/node": "^18.18.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",

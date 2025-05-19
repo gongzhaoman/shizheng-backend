@@ -1987,17 +1987,15 @@ export namespace Prisma {
   }
 
   export type ProjectCreateInput = {
-    id: number
     name: string
   }
 
   export type ProjectUncheckedCreateInput = {
-    id: number
+    id?: number
     name: string
   }
 
   export type ProjectUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
   }
 
@@ -2007,12 +2005,11 @@ export namespace Prisma {
   }
 
   export type ProjectCreateManyInput = {
-    id: number
+    id?: number
     name: string
   }
 
   export type ProjectUpdateManyMutationInput = {
-    id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
   }
 
@@ -2104,16 +2101,16 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {

@@ -29,7 +29,7 @@ projects.get('/', async (c) => {
     ? {
         name: {
           contains: keyword,
-          mode: Prisma.QueryMode.insensitive, // 使用枚举而不是字符串
+          mode: Prisma.QueryMode.insensitive,
         },
       }
     : {};
@@ -46,8 +46,20 @@ projects.get('/', async (c) => {
     orderBy: { id: 'asc' },
   });
 
+  // 转换数据，将真实ID替换为从1开始的序号
+  const transformedData = data.map((project, index) => {
+    // 计算当前项目在整个结果集中的序号
+    const sequentialId = (page - 1) * pageSize + index + 1;
+
+    // 创建一个新对象，保留原ID作为rawId，使用序号作为id
+    return {
+      id: sequentialId,
+      name: project.name,
+    };
+  });
+
   const result = {
-    data,
+    data: transformedData,
     pagination: {
       page,
       pageSize,
